@@ -47,6 +47,7 @@ class RobotConfig:
 
 
 class ChessRobot:
+    MOVE_WAYPOINT_DELAY_SEC = 0.12
 
     def __init__(
         self,
@@ -202,7 +203,7 @@ class ChessRobot:
         for waypoint in waypoints:
             if not self.send_angles_to_esp32(waypoint):
                 return False
-            time.sleep(0.12)
+            time.sleep(self.MOVE_WAYPOINT_DELAY_SEC)
 
         return True
 
