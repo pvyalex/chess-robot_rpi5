@@ -194,6 +194,18 @@ class ChessRobot:
 
         return waypoints
 
+    def _move_between_squares_arc(self, from_pos: str, to_pos: str, steps: int = 5) -> bool:
+        waypoints = self._interpolate_path(from_pos, to_pos, steps=steps)
+        if not waypoints:
+            return False
+
+        for waypoint in waypoints:
+            if not self.send_angles_to_esp32(waypoint):
+                return False
+            time.sleep(0.12)
+
+        return True
+
     def send_command(self, cmd: str) -> str:
         if self.transport == "tcp":
             if self.tcp_server:
@@ -304,10 +316,11 @@ class ChessRobot:
         print(f"   Robot: {response}")
         time.sleep(0.2)
 
-        print("\n[3] Ridic...")
-        response = self.send_command("MIDDLE")
-        print(f"   Robot:  {response}")
-        time.sleep(0.1)
+        print("\n[3] Ridic si traversez...")
+        if not self._move_between_squares_arc(from_pos, to_pos):
+            response = self.send_command("MIDDLE")
+            print(f"   Robot:  {response}")
+            time.sleep(0.1)
 
         print("\n[4] Merg la destinatie...")
         if not self._move_to_square(to_pos):
