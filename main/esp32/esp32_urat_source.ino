@@ -38,7 +38,7 @@ const int SHOULDER_BOARD_ENTRY = 80;
 //   MAX_D ms at the edges, MIN_D ms in the cruise zone.
 //   RAMP = how many steps to spend accelerating / decelerating (≤ 10, ≤ 33% of travel).
 int rampDelay(int stepsDone, int stepsTotal) {
-    const int MAX_D = 6;  // ms — slow (start / end)
+    const int MAX_D = 4;  // ms — slow (start / end)
     const int MIN_D = 1;  // ms — fast (cruise)
     int ramp = min(10, stepsTotal / 3);
     if (ramp < 2) return MIN_D;  // move too short to bother ramping
@@ -150,12 +150,11 @@ void moveShoulderElbowTogether(int targetShoulder, int targetElbow,
 // ─────────────────────────────────────────────────────
 
 // Move to a board square.
-// If arm is folded at BASE rest (shoulder=130), snap to board entry (80) before
+// If arm is folded at BASE rest (shoulder=130), move to board entry (80) before
 // swinging the base — avoids sweeping a dangerously wide arc at full extension.
 void smoothMove(int targetBase, int targetShoulder, int targetElbow) {
     if (currentShoulder == SHOULDER_BASE_REST) {
-        currentShoulder = SHOULDER_BOARD_ENTRY;
-        servoShoulder.write(SHOULDER_BOARD_ENTRY);
+        smoothMoveSingle(&currentShoulder, SHOULDER_BOARD_ENTRY, &servoShoulder);
     }
 
     smoothMoveSingle(&currentBase, targetBase, &servoBase, true);
