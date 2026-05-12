@@ -216,7 +216,7 @@ void moveShoulderElbowTogether(int targetShoulder, int targetElbow,
 // swinging the base — avoids sweeping a dangerously wide arc at full extension.
 void smoothMove(int targetBase, int targetShoulder, int targetElbow) {
     if (currentShoulder == SHOULDER_BASE_REST) {
-        smoothMoveSingle(&currentShoulder, SHOULDER_BOARD_ENTRY, &servoShoulder);
+        smoothMoveSingle(&currentShoulder, SHOULDER_BOARD_ENTRY, &servoShoulder, false);
     }
 
     smoothMoveSingle(&currentBase, targetBase, &servoBase, true);
