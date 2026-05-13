@@ -20,13 +20,13 @@ class RobotConfig:
     L3: float = 130.0
     L3_angle: float = 68.51
     H_shoulder: float = 90.0
-    H_piece: float = 50.0
+    H_piece: float = 55.0
     square_size: float = 35.0
-    distance_to_row8: float = 140.0
+    distance_to_row8: float = 127.0
 
     # 64-point least-squares fitted parameters
     base_scale: float = 1.1043
-    base_offset: float = 5.809
+    base_offset: float = 5.85
     shoulder_scale: float = 0.7910
     shoulder_offset: float = 10.0883
     elbow_scale: float = -0.7949
